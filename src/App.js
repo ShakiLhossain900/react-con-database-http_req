@@ -95,3 +95,5 @@ function App() {
 }
 
 export default App;
+///this is app js has problem when i run the code and click the button
+//to show the movie list in output that time its shows a bit late output
