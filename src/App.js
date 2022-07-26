@@ -77,7 +77,7 @@ function App() {
       };
     });
     setMovies(transformedMovies);
-    setIsloading(false);
+     setIsloading(false);
   }
 
   return (
