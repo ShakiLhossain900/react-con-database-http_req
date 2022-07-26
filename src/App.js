@@ -1,3 +1,5 @@
+// fetch from starway api and   therefore and backend app  which return to database
+
 import React, {useState} from "react";
 import "./App.css";
 import MoviesList from "./components/MoviesList";
@@ -26,7 +28,15 @@ function fetchMoviehandler() {
     return response.json();
     })
   .then((data) => {
-    setMovies(data.results);
+    const transformedMovie = data.results.map(movieData => { 
+      return { 
+        id: movieData.episode_id,
+        title : movieData.title, 
+        openingText : movieData.opening_crawl, 
+        releaseDate : movieData.release_date,
+      }
+    })
+    setMovies(transformedMovie);
   });
 }
 
@@ -34,10 +44,10 @@ function fetchMoviehandler() {
   return (
     <React.Fragment>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={fetchMoviehandler}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={dummyMovies} />
+        <MoviesList movies={movies} />
       </section>
     </React.Fragment>
   );
