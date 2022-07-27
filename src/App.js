@@ -54,7 +54,67 @@
 
 // export default App;
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+
+// import MoviesList from "./components/MoviesList";
+// import "./App.css";
+
+// function App() {
+//   const [movies, setMovies] = useState([]);
+//   const [isLoading, setIsloading] = useState(false);
+//   const [error, setError] = useState(null);
+
+//   async function fetchMoviesHandler() {
+//     setIsloading(true);
+//     setError(null);
+
+//     try {
+//       const response = await fetch("https://swapi.dev/api/films/");
+//       if (!response.ok) {
+//         throw new Error("Something went wrong");
+//       }
+//       const data = await response.json();
+
+//       const transformedMovies = data.results.map((movieData) => {
+//         return {
+//           id: movieData.episode_id,
+//           title: movieData.title,
+//           openingText: movieData.opening_crawl,
+//           releaseDate: movieData.release_date,
+//         };
+//       });
+//       setMovies(transformedMovies);
+//     } catch (error) {
+//       setError(error.message);
+//     }
+//     setIsloading(false);
+//   }
+
+//   return (
+//     <React.Fragment>
+//       <section>
+//         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+//       </section>
+//       <section>
+//         {!isLoading && movies.length > 0 && <MoviesList movies={movies} />}
+//         {!isLoading && movies.length === 0 && <p>Found no movies.</p>}
+//         {isLoading && <p>Loading...</p>}
+//         {!isLoading && error && <p>{error}</p>}
+//       </section>
+//     </React.Fragment>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+// using useEffect for request 
+
+import React, { useState, useEffect,useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -64,12 +124,13 @@ function App() {
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function fetchMoviesHandler() {
+
+   const  fetchMoviesHandler= useCallback( async ()=> {
     setIsloading(true);
     setError(null);
 
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("https://swapi.dev/api/films");
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
@@ -84,11 +145,16 @@ function App() {
         };
       });
       setMovies(transformedMovies);
-      setIsloading(false);
+      
     } catch (error) {
       setError(error.message);
     }
-  }
+    setIsloading(false);
+  },[]);
+  
+  useEffect(()=>{
+    fetchMoviesHandler();
+  },[fetchMoviesHandler]);
 
   return (
     <React.Fragment>
@@ -104,7 +170,4 @@ function App() {
     </React.Fragment>
   );
 }
-
-export default App;
-///this is app js has problem when i run the code and click the button
-//to show the movie list in output that time its shows a bit late output
+ export default App;
