@@ -107,25 +107,20 @@
 
 // export default App;
 
+// using useEffect for request
 
-
-
-
-
-// using useEffect for request 
-
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import AddMovie from "./components/AddMovie";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
 
-
-   const  fetchMoviesHandler= useCallback( async ()=> {
+  const fetchMoviesHandler = useCallback(async () => {
     setIsloading(true);
     setError(null);
 
@@ -145,19 +140,25 @@ function App() {
         };
       });
       setMovies(transformedMovies);
-      
     } catch (error) {
       setError(error.message);
     }
     setIsloading(false);
-  },[]);
-  
-  useEffect(()=>{
+  }, []);
+
+  useEffect(() => {
     fetchMoviesHandler();
-  },[fetchMoviesHandler]);
+  }, [fetchMoviesHandler]);
+  
+  function addMovieHandler(movie) {
+    console.log(movie);
+  }
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
@@ -170,4 +171,4 @@ function App() {
     </React.Fragment>
   );
 }
- export default App;
+export default App;
