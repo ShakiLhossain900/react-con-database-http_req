@@ -120,6 +120,9 @@ function App() {
   const [isLoading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
 
+
+
+  ///get method
   const fetchMoviesHandler = useCallback(async () => {
     setIsloading(true);
     setError(null);
@@ -162,6 +165,8 @@ function App() {
   useEffect(() => {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
+
+//post method 
 
   async function addMovieHandler(movie) {
     const response = await fetch(
